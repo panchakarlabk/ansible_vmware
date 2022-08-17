@@ -1,0 +1,7 @@
+- hosts: all
+  roles:
+    - powerstore
+    - vmware_bracknell
+  environment:
+    REQUESTS_CA_BUNDLE: "{{ REQUESTS_CA_BUNDLE }}"
+    # Set the environment variable REQUESTS_CA_BUNDLE to the path of the SSL certificate.

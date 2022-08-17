@@ -1,0 +1,26 @@
+---
+# tasks file for vmware_bracknell
+- name: Gather cluster info from given datacenter
+  community.vmware.vmware_cluster_info:
+    hostname: "{{ vcenter_hostname }}"
+    username: "{{ vcenter_username }}"
+    password: "{{ vcenter_password }}"
+    datacenter: "{{ vcenter_datacenter }}"
+    validate_certs: No
+  delegate_to: localhost
+  register: cluster_info
+
+- name: Gather info from datacenter about specific datastore
+  community.vmware.vmware_datastore_info:
+    hostname: "{{ vcenter_hostname }}"
+    username: "{{ vcenter_username }}"
+    password: "{{ vcenter_password }}"
+    datacenter: "{{ vcenter_datacenter }}"
+    name: "{{ vcenter_datastore }}"
+    validate_certs: No
+  delegate_to: localhost
+  register: info
+
+- name: Print return information from the previous task
+  ansible.builtin.debug:
+    var: info

@@ -1,0 +1,47 @@
+---
+# tasks file for vm_build_bracknell
+- name: Create a virtual machine from a template
+  community.vmware.vmware_guest:
+    datacenter: "{{ vcenter_datacenter }}"
+    validate_certs: "{{ validate_certs }}"
+    hostname: "{{ vcenter_hostname }}"
+    username: "{{ vcenter_username }}"
+    password: "{{ vcenter_password }}"
+    folder: "{{ vcenter_datacenter }}/{{ vm_folder }}"
+    name: "{{ vm_name }}"
+    state: poweredon
+    template: "{{ vm_template }}"
+    disk:
+      - size_gb: "{{ vm_disk_size }}"
+        type: thin
+        datastore: "{{ vcenter_datastore }}"
+    hardware:
+      memory_mb: "{{ vm_mem }}"
+      num_cpus: "{{ vm_cpus }}"
+      num_cpu_cores_per_socket: "{{ vm_cores }}"
+      scsi: paravirtual
+      memory_reservation_lock: True
+      mem_limit: "{{ vm_mem_limit }}" # 8192
+      mem_reservation: "{{ vm_mem_reserved }}" # 4096
+      #cpu_limit: "{{ vm_cpu_limit }}" # 4096
+      #cpu_reservation: "{{ vm_cpu_limit }}" # 4096
+      max_connections: "{{ vm_max_connections }}"
+      hotadd_cpu: True
+      hotremove_cpu: True
+      hotadd_memory: False
+      version: 12 # Hardware version of virtual machine
+      boot_firmware: "efi"
+    cdrom:
+      - controller_number: 0
+        unit_number: 0
+        state: absent
+    #       type: iso
+    #       iso_path: "[datastore1] livecd.iso"
+    networks:
+      - name: "{{ vm_network }}"
+        connected: yes
+        state: "present"
+        start_connected: yes
+    wait_for_ip_address: true
+  delegate_to: localhost
+  register: deploy

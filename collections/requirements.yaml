@@ -1,0 +1,4 @@
+---
+collections:
+  - name: dellemc.powerstore
+  - name: community.vmware

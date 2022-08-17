@@ -1,0 +1,37 @@
+---
+# tasks file for powerstore
+
+- name: Create stand-alone volume
+  dellemc.powerstore.volume:
+    array_ip: "{{array_ip}}"
+    verifycert: "{{verifycert}}"
+    user: "{{username}}"
+    password: "{{password}}"
+    vol_name: "{{vol_name}}"
+    size: 1
+    cap_unit: "{{cap_unit}}"
+    state: "present"
+# - name: Create stand-alone volume with performance and protection policy
+#   dellemc.powerstore.volume:
+#     array_ip: "{{array_ip}}"
+#     verifycert: "{{verifycert}}"
+#     user: "{{username}}"
+#     password: "{{password}}"
+#     vol_name: "{{vol_name}}"
+#     size: 5
+#     cap_unit: "{{cap_unit}}"
+#     state: "present"
+#     description: "Description"
+# performance_policy: "{{ pp }}"
+# protection_policy: "{{ pp_name }}"
+
+# - name: Map volume to a host without HLU
+#   dellemc.powerstore.volume:
+#     array_ip: "{{array_ip}}"
+#     verifycert: "{{verifycert}}"
+#     user: "{{username}}"
+#     password: "{{password}}"
+#     vol_name: "{{vol_name}}"
+#     state: "present"
+#     mapping_state: "mapped"
+#     host: "{{ target_host }}"
